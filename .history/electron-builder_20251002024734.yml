@@ -1,0 +1,121 @@
+appId: com.roseglass.stableaudio
+productName: RoseGlass StableAudio
+copyright: Copyright © 2024 RoseGlass
+directories:
+  output: dist
+  buildResources: build
+files:
+  - src/**/*
+  - node_modules/**/*
+  - package.json
+  - "!node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}"
+  - "!node_modules/*/{test,__tests__,tests,powered-test,example,examples}"
+  - "!node_modules/*.d.ts"
+  - "!node_modules/.bin"
+  - "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}"
+  - "!.editorconfig"
+  - "!**/._*"
+  - "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}"
+  - "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}"
+  - "!**/{appveyor.yml,.travis.yml,circle.yml}"
+  - "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: msi
+      arch:
+        - x64
+  icon: assets/icon.ico
+  publisherName: RoseGlass
+  verifyUpdateCodeSignature: false
+  requestedExecutionLevel: asInvoker
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: RoseGlass StableAudio
+  uninstallDisplayName: RoseGlass StableAudio
+  installerIcon: assets/icon.ico
+  uninstallerIcon: assets/icon.ico
+  installerHeader: assets/installer-header.bmp
+  installerHeaderIcon: assets/icon.ico
+  deleteAppDataOnUninstall: false
+  runAfterFinish: true
+  menuCategory: Audio & Video
+  displayLanguageSelector: false
+  language: 1033
+
+msi:
+  oneClick: false
+  perMachine: false
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: RoseGlass StableAudio
+  upgradeCode: "12345678-1234-1234-1234-123456789012"
+  installerIcon: assets/icon.ico
+  runAfterFinish: true
+  menuCategory: Audio & Video
+  language: 1033
+  manufacturer: RoseGlass
+  description: Multi-model audio generation app with audio prompting capabilities
+
+mac:
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+  icon: assets/icon.icns
+  category: public.app-category.music
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+
+dmg:
+  title: RoseGlass StableAudio
+  icon: assets/icon.icns
+  background: assets/dmg-background.png
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+  window:
+    width: 540
+    height: 380
+
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+    - target: deb
+      arch:
+        - x64
+  icon: assets/icon.png
+  category: AudioVideo
+  synopsis: Multi-model audio generation app
+  description: |
+    RoseGlass StableAudio is a comprehensive desktop application for AI-powered music generation.
+    It supports multiple state-of-the-art models including Stable Audio, AudioCraft/MusicGen,
+    AudioLDM, and NVIDIA Fugatto, with advanced audio prompting capabilities.
+  maintainer: RoseGlass <contact@roseglass.com>
+  vendor: RoseGlass
+  desktop:
+    Name: RoseGlass StableAudio
+    Comment: Multi-model audio generation app
+    Keywords: music;audio;ai;generation;stable;audiocraft;musicgen;audiolm;fugatto;
+    StartupWMClass: roseglass-stableaudio
+    MimeType: audio/wav;audio/mp3;audio/flac;audio/ogg;
