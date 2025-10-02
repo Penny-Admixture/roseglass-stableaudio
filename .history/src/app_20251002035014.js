@@ -291,7 +291,6 @@ class App {
         } finally {
             // Reset UI
             generateButton.disabled = false;
-            generateButton.classList.remove('generating');
             generateButton.innerHTML = '<i class="fas fa-play"></i> Generate Music';
             this.isGenerating = false;
         }

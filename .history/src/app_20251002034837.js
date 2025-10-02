@@ -10,16 +10,13 @@ class App {
         this.init();
     }
 
-    async init() {
+    init() {
         this.setupEventListeners();
         this.setupTabSwitching();
         this.setupRangeSliders();
         this.setupFileUploads();
         this.setupAudioPlayers();
         this.updateModeStatus();
-        
-        // Initialize local models with progress
-        await this.initializeLocalModels();
     }
 
     setupEventListeners() {
@@ -153,44 +150,11 @@ class App {
                 input.click();
             });
 
-            input.addEventListener('change', async (event) => {
+            input.addEventListener('change', (event) => {
                 const file = event.target.files[0];
                 if (file) {
-                    try {
-                        // Show progress for file processing
-                        const statusElement = document.getElementById(buttonId.replace('-upload-btn', '-status'));
-                        if (statusElement) {
-                            this.showStatus(statusElement, 'Processing audio file...', 'info');
-                            
-                            this.updateProgress(statusElement, 'Reading file...', 20);
-                            await this.delay(200);
-                            
-                            this.updateProgress(statusElement, 'Validating audio format...', 40);
-                            await this.delay(300);
-                            
-                            this.updateProgress(statusElement, 'Processing audio data...', 60);
-                            await this.delay(400);
-                            
-                            this.updateProgress(statusElement, 'Finalizing...', 80);
-                            await this.delay(200);
-                            
-                            nameDisplay.textContent = file.name;
-                            this.currentAudio = file;
-                            
-                            this.updateProgress(statusElement, 'Audio file ready!', 100);
-                            setTimeout(() => {
-                                this.showStatus(statusElement, 'Ready for generation!', 'success');
-                            }, 1000);
-                        } else {
-                            nameDisplay.textContent = file.name;
-                            this.currentAudio = file;
-                        }
-                    } catch (error) {
-                        console.error('Error processing audio file:', error);
-                        if (statusElement) {
-                            this.showStatus(statusElement, `Error: ${error.message}`, 'error');
-                        }
-                    }
+                    nameDisplay.textContent = file.name;
+                    this.currentAudio = file;
                 }
             });
         }
@@ -246,7 +210,6 @@ class App {
         try {
             // Update UI with progress
             generateButton.disabled = true;
-            generateButton.classList.add('generating');
             generateButton.innerHTML = '<div class="loading"></div> Generating...';
             this.showStatus(statusElement, 'Initializing generation...', 'info');
 
@@ -291,7 +254,6 @@ class App {
         } finally {
             // Reset UI
             generateButton.disabled = false;
-            generateButton.classList.remove('generating');
             generateButton.innerHTML = '<i class="fas fa-play"></i> Generate Music';
             this.isGenerating = false;
         }
@@ -558,33 +520,6 @@ class App {
             toggle.disabled = true;
             toggleText.textContent = 'API Only';
             console.log('⚠️ Local GPU models not available, using API mode');
-        }
-    }
-
-    async initializeLocalModels() {
-        // Show initialization progress
-        const statusElements = document.querySelectorAll('[id$="-status"]');
-        const initStatus = statusElements[0]; // Use first status element for global status
-        
-        if (initStatus) {
-            this.showStatus(initStatus, 'Initializing local models...', 'info');
-            
-            this.updateProgress(initStatus, 'Checking Python environment...', 10);
-            await this.delay(500);
-            
-            this.updateProgress(initStatus, 'Loading AI models...', 30);
-            await this.delay(1000);
-            
-            this.updateProgress(initStatus, 'Preparing GPU acceleration...', 60);
-            await this.delay(800);
-            
-            this.updateProgress(initStatus, 'Finalizing setup...', 90);
-            await this.delay(300);
-            
-            this.updateProgress(initStatus, 'Local models ready!', 100);
-            setTimeout(() => {
-                this.showStatus(initStatus, 'Ready for local generation!', 'success');
-            }, 1000);
         }
     }
 }

@@ -246,7 +246,6 @@ class App {
         try {
             // Update UI with progress
             generateButton.disabled = true;
-            generateButton.classList.add('generating');
             generateButton.innerHTML = '<div class="loading"></div> Generating...';
             this.showStatus(statusElement, 'Initializing generation...', 'info');
 
@@ -291,7 +290,6 @@ class App {
         } finally {
             // Reset UI
             generateButton.disabled = false;
-            generateButton.classList.remove('generating');
             generateButton.innerHTML = '<i class="fas fa-play"></i> Generate Music';
             this.isGenerating = false;
         }
