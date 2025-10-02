@@ -119,7 +119,7 @@ $standalonePackageJson = @{
             menuCategory = "Audio & Video"
             displayLanguageSelector = $false
             language = 1033
-            artifactName = "`${productName} Setup `${version}.`${ext}"
+            artifactName = "${productName} Setup ${version}.${ext}"
             include = "installer.nsh"
         }
     }

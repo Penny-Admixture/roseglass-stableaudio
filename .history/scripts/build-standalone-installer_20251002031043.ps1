@@ -119,20 +119,20 @@ $standalonePackageJson = @{
             menuCategory = "Audio & Video"
             displayLanguageSelector = $false
             language = 1033
-            artifactName = "`${productName} Setup `${version}.`${ext}"
+            artifactName = "${productName} Setup ${version}.${ext}"
             include = "installer.nsh"
         }
     }
     devDependencies = @{
-        "electron" = "^28.0.0"
-        "electron-builder" = "^24.9.1"
+        electron = "^28.0.0"
+        electron-builder = "^24.9.1"
     }
     dependencies = @{
-        "axios" = "^1.6.0"
-        "file-saver" = "^2.0.5"
-        "web-audio-api" = "^0.2.2"
-        "tone" = "^14.7.77"
-        "wavesurfer.js" = "^7.4.0"
+        axios = "^1.6.0"
+        file-saver = "^2.0.5"
+        web-audio-api = "^0.2.2"
+        tone = "^14.7.77"
+        wavesurfer.js = "^7.4.0"
     }
     author = "RoseGlass"
     license = "MIT"

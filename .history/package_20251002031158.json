@@ -1,0 +1,68 @@
+{
+  "name": "roseglass-stableaudio",
+  "version": "1.0.0",
+  "description": "Multi-model audio generation app with audio prompting capabilities",
+  "main": "src/main.js",
+  "homepage": "./",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:msi": "electron-builder --win --x64 --publish=never --config.win.target=nsis",
+    "build:installer": "node scripts/build-installer.js",
+    "build:standalone": "powershell -ExecutionPolicy Bypass -File scripts/build-standalone-installer.ps1",
+    "setup:standalone": "powershell -ExecutionPolicy Bypass -File scripts/setup-standalone.ps1",
+    "dist": "npm run build:msi",
+    "pack": "electron-builder --dir",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "appId": "com.roseglass.stableaudio",
+    "productName": "RoseGlass StableAudio",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "msi",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "msi": {
+      "oneClick": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "file-saver": "^2.0.5",
+    "web-audio-api": "^0.2.2",
+    "tone": "^14.7.77",
+    "wavesurfer.js": "^7.4.0"
+  },
+  "author": "RoseGlass",
+  "license": "MIT"
+}
