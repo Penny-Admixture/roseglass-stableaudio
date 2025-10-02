@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Icon Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        canvas { border: 1px solid #ccc; margin: 10px; }
+        .icon-preview { display: flex; gap: 20px; flex-wrap: wrap; }
+        .icon-size { text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>RoseGlass StableAudio Icon Generator</h1>
+    <p>This will generate icons for the application. Click the button below to create icons.</p>
+    
+    <button onclick="generateIcons()">Generate Icons</button>
+    
+    <div class="icon-preview" id="preview"></div>
+    
+    <script>
+        function generateIcons() {
+            const sizes = [16, 32, 48, 64, 128, 256, 512, 1024];
+            const preview = document.getElementById('preview');
+            preview.innerHTML = '';
+            
+            sizes.forEach(size => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                
+                // Create gradient background
+                const gradient = ctx.createLinearGradient(0, 0, size, size);
+                gradient.addColorStop(0, '#667eea');
+                gradient.addColorStop(1, '#764ba2');
+                
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, size, size);
+                
+                // Add music note
+                ctx.fillStyle = 'white';
+                ctx.font = `${size * 0.6}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('♪', size/2, size/2);
+                
+                // Add border
+                ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+                ctx.lineWidth = size * 0.02;
+                ctx.strokeRect(0, 0, size, size);
+                
+                // Create download link
+                const link = document.createElement('a');
+                link.download = `icon-${size}.png`;
+                link.href = canvas.toDataURL();
+                link.textContent = `Download ${size}x${size}`;
+                link.style.display = 'block';
+                link.style.marginTop = '5px';
+                
+                const container = document.createElement('div');
+                container.className = 'icon-size';
+                container.appendChild(canvas);
+                container.appendChild(link);
+                preview.appendChild(container);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -436,23 +436,6 @@ class App {
             console.error('Error loading audio from path:', error);
         }
     }
-
-    updateModeStatus() {
-        const status = this.modelAPIs.getModelStatus();
-        const toggle = document.getElementById('local-mode-toggle');
-        const toggleText = document.querySelector('.toggle-text');
-        
-        if (status.localAvailable.isLocalAvailable) {
-            toggle.disabled = false;
-            toggleText.textContent = status.currentMode === 'local' ? 'Local GPU' : 'API Mode';
-            console.log('✅ Local GPU models available');
-        } else {
-            toggle.checked = false;
-            toggle.disabled = true;
-            toggleText.textContent = 'API Only';
-            console.log('⚠️ Local GPU models not available, using API mode');
-        }
-    }
 }
 
 // Initialize app when DOM is loaded

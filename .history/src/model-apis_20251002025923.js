@@ -173,19 +173,6 @@ class ModelAPIs {
 
     // Generic audio generation method that routes to appropriate model
     async generateAudio(model, params) {
-        // Try local models first if available
-        if (this.useLocalFirst && this.localModels.isModelAvailable(model)) {
-            try {
-                console.log(`🖥️ Using local GPU model: ${model}`);
-                return await this.localModels.generateLocal(model, params);
-            } catch (error) {
-                console.log(`⚠️ Local model failed, falling back to API: ${error.message}`);
-                // Fall back to API
-            }
-        }
-
-        // Fall back to API models
-        console.log(`🌐 Using API model: ${model}`);
         switch (model) {
             case 'stable-audio':
                 return await this.generateStableAudio(params);
@@ -198,21 +185,6 @@ class ModelAPIs {
             default:
                 throw new Error(`Unknown model: ${model}`);
         }
-    }
-
-    // Toggle between local and API modes
-    setLocalMode(enabled) {
-        this.useLocalFirst = enabled;
-        console.log(`🔄 Switched to ${enabled ? 'local' : 'API'} mode`);
-    }
-
-    // Get model status
-    getModelStatus() {
-        return {
-            localAvailable: this.localModels.getModelStatus(),
-            currentMode: this.useLocalFirst ? 'local' : 'api',
-            apiAvailable: true
-        };
     }
 
     // Utility method to create mock audio for demonstration
