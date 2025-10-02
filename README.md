@@ -30,18 +30,18 @@ A comprehensive desktop application for AI-powered music generation with audio p
 ## Installation
 
 ### Windows
-1. Download the latest MSI installer from [Releases](https://github.com/roseglass/roseglass-stableaudio/releases)
+1. Download the latest MSI installer from [Releases](https://github.com/Penny-Admixture/roseglass-stableaudio/releases)
 2. Run the installer and follow the setup wizard
 3. The app will be installed to your Program Files directory
 4. Launch from Start Menu or Desktop shortcut
 
 ### macOS
-1. Download the DMG file from [Releases](https://github.com/roseglass/roseglass-stableaudio/releases)
+1. Download the DMG file from [Releases](https://github.com/Penny-Admixture/roseglass-stableaudio/releases)
 2. Open the DMG and drag the app to Applications folder
 3. Launch from Applications or Launchpad
 
 ### Linux
-1. Download the AppImage or DEB package from [Releases](https://github.com/roseglass/roseglass-stableaudio/releases)
+1. Download the AppImage or DEB package from [Releases](https://github.com/Penny-Admixture/roseglass-stableaudio/releases)
 2. For AppImage: Make executable and run: `chmod +x RoseGlass-StableAudio-*.AppImage && ./RoseGlass-StableAudio-*.AppImage`
 3. For DEB: Install with `sudo dpkg -i roseglass-stableaudio_*.deb`
 
@@ -90,7 +90,7 @@ A comprehensive desktop application for AI-powered music generation with audio p
 #### Basic Setup (API Mode)
 ```bash
 # Clone the repository
-git clone https://github.com/roseglass/roseglass-stableaudio.git
+git clone https://github.com/Penny-Admixture/roseglass-stableaudio.git
 cd roseglass-stableaudio
 
 # Install dependencies
@@ -103,7 +103,7 @@ npm run dev
 #### Local GPU Setup (Recommended)
 ```bash
 # Clone the repository
-git clone https://github.com/roseglass/roseglass-stableaudio.git
+git clone https://github.com/Penny-Admixture/roseglass-stableaudio.git
 cd roseglass-stableaudio
 
 # Install Node.js dependencies
@@ -186,8 +186,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 - 📧 Email: support@roseglass.com
-- 🐛 Issues: [GitHub Issues](https://github.com/roseglass/roseglass-stableaudio/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/roseglass/roseglass-stableaudio/discussions)
+- 🐛 Issues: [GitHub Issues](https://github.com/Penny-Admixture/roseglass-stableaudio/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/Penny-Admixture/roseglass-stableaudio/discussions)
 
 ## Roadmap
 
