@@ -9,7 +9,7 @@
     "dev": "electron . --dev",
     "build": "electron-builder",
     "build:win": "electron-builder --win",
-    "build:msi": "electron-builder --win --x64 --publish=never --config.win.target=nsis",
+    "build:msi": "electron-builder --win --x64 --publish=never",
     "build:installer": "node scripts/build-installer.js",
     "dist": "npm run build:msi",
     "pack": "electron-builder --dir",
