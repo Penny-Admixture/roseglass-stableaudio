@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoseGlass StableAudio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-music"></i>
+                    <h1>RoseGlass StableAudio</h1>
+                </div>
+                <div class="header-controls">
+                    <div class="mode-toggle">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="local-mode-toggle" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-text">Local GPU</span>
+                        </label>
+                    </div>
+                    <button id="new-generation-btn" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> New Generation
+                    </button>
+                    <button id="open-audio-btn" class="btn btn-secondary">
+                        <i class="fas fa-folder-open"></i> Open Audio
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="stable-audio">
+                <i class="fas fa-waveform-lines"></i>
+                Stable Audio
+            </button>
+            <button class="tab-btn" data-tab="audiocraft">
+                <i class="fas fa-cogs"></i>
+                AudioCraft/MusicGen
+            </button>
+            <button class="tab-btn" data-tab="audiolm">
+                <i class="fas fa-magic"></i>
+                AudioLDM
+            </button>
+            <button class="tab-btn" data-tab="fugatto">
+                <i class="fas fa-microchip"></i>
+                NVIDIA Fugatto
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Stable Audio Tab -->
+            <div id="stable-audio" class="tab-content active">
+                <div class="model-header">
+                    <h2><i class="fas fa-waveform-lines"></i> Stable Audio</h2>
+                    <p>Generate music with audio prompting and style control</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="input-panel">
+                        <h3>Input Configuration</h3>
+                        
+                        <div class="form-group">
+                            <label for="sa-text-prompt">Text Prompt</label>
+                            <textarea id="sa-text-prompt" placeholder="Describe the music you want to generate..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sa-audio-file">Audio Prompt (Optional)</label>
+                            <div class="file-input-container">
+                                <input type="file" id="sa-audio-file" accept="audio/*" style="display: none;">
+                                <button id="sa-upload-btn" class="btn btn-outline">
+                                    <i class="fas fa-upload"></i> Upload Audio
+                                </button>
+                                <span id="sa-file-name" class="file-name"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sa-duration">Duration (seconds)</label>
+                            <input type="number" id="sa-duration" value="10" min="1" max="30">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sa-input-strength">Input Audio Strength</label>
+                            <input type="range" id="sa-input-strength" min="0" max="1" step="0.1" value="0.5">
+                            <span id="sa-input-strength-value">0.5</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sa-prompt-strength">Prompt Strength</label>
+                            <input type="range" id="sa-prompt-strength" min="0" max="1" step="0.1" value="0.5">
+                            <span id="sa-prompt-strength-value">0.5</span>
+                        </div>
+
+                        <button id="sa-generate-btn" class="btn btn-primary btn-large">
+                            <i class="fas fa-play"></i> Generate Music
+                        </button>
+                    </div>
+
+                    <div class="output-panel">
+                        <h3>Generated Audio</h3>
+                        <div id="sa-audio-player" class="audio-player">
+                            <div class="audio-controls">
+                                <button id="sa-play-btn" class="btn btn-icon" disabled>
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                    <span class="time-display">0:00 / 0:00</span>
+                                </div>
+                                <button id="sa-download-btn" class="btn btn-icon" disabled>
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="sa-status" class="status-message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AudioCraft/MusicGen Tab -->
+            <div id="audiocraft" class="tab-content">
+                <div class="model-header">
+                    <h2><i class="fas fa-cogs"></i> AudioCraft/MusicGen</h2>
+                    <p>Meta's open-source music generation with audio conditioning</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="input-panel">
+                        <h3>Input Configuration</h3>
+                        
+                        <div class="form-group">
+                            <label for="ac-text-prompt">Text Prompt</label>
+                            <textarea id="ac-text-prompt" placeholder="Describe the music style, instruments, mood..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ac-audio-file">Audio Conditioning (Optional)</label>
+                            <div class="file-input-container">
+                                <input type="file" id="ac-audio-file" accept="audio/*" style="display: none;">
+                                <button id="ac-upload-btn" class="btn btn-outline">
+                                    <i class="fas fa-upload"></i> Upload Audio
+                                </button>
+                                <span id="ac-file-name" class="file-name"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ac-model-size">Model Size</label>
+                            <select id="ac-model-size">
+                                <option value="small">Small (300M)</option>
+                                <option value="medium">Medium (1.5B)</option>
+                                <option value="large">Large (3.3B)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ac-duration">Duration (seconds)</label>
+                            <input type="number" id="ac-duration" value="10" min="1" max="30">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ac-guidance-scale">Guidance Scale</label>
+                            <input type="range" id="ac-guidance-scale" min="1" max="10" step="0.5" value="3">
+                            <span id="ac-guidance-scale-value">3.0</span>
+                        </div>
+
+                        <button id="ac-generate-btn" class="btn btn-primary btn-large">
+                            <i class="fas fa-play"></i> Generate Music
+                        </button>
+                    </div>
+
+                    <div class="output-panel">
+                        <h3>Generated Audio</h3>
+                        <div id="ac-audio-player" class="audio-player">
+                            <div class="audio-controls">
+                                <button id="ac-play-btn" class="btn btn-icon" disabled>
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                    <span class="time-display">0:00 / 0:00</span>
+                                </div>
+                                <button id="ac-download-btn" class="btn btn-icon" disabled>
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="ac-status" class="status-message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AudioLDM Tab -->
+            <div id="audiolm" class="tab-content">
+                <div class="model-header">
+                    <h2><i class="fas fa-magic"></i> AudioLDM</h2>
+                    <p>Latent diffusion model for audio generation and style transfer</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="input-panel">
+                        <h3>Input Configuration</h3>
+                        
+                        <div class="form-group">
+                            <label for="al-text-prompt">Text Prompt</label>
+                            <textarea id="al-text-prompt" placeholder="Describe the audio you want to generate..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="al-audio-file">Source Audio for Style Transfer</label>
+                            <div class="file-input-container">
+                                <input type="file" id="al-audio-file" accept="audio/*" style="display: none;">
+                                <button id="al-upload-btn" class="btn btn-outline">
+                                    <i class="fas fa-upload"></i> Upload Audio
+                                </button>
+                                <span id="al-file-name" class="file-name"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="al-duration">Duration (seconds)</label>
+                            <input type="number" id="al-duration" value="10" min="1" max="30">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="al-guidance-scale">Guidance Scale</label>
+                            <input type="range" id="al-guidance-scale" min="1" max="10" step="0.5" value="2.5">
+                            <span id="al-guidance-scale-value">2.5</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="al-num-steps">Number of Steps</label>
+                            <input type="range" id="al-num-steps" min="10" max="100" step="5" value="50">
+                            <span id="al-num-steps-value">50</span>
+                        </div>
+
+                        <button id="al-generate-btn" class="btn btn-primary btn-large">
+                            <i class="fas fa-play"></i> Generate Audio
+                        </button>
+                    </div>
+
+                    <div class="output-panel">
+                        <h3>Generated Audio</h3>
+                        <div id="al-audio-player" class="audio-player">
+                            <div class="audio-controls">
+                                <button id="al-play-btn" class="btn btn-icon" disabled>
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                    <span class="time-display">0:00 / 0:00</span>
+                                </div>
+                                <button id="al-download-btn" class="btn btn-icon" disabled>
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="al-status" class="status-message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NVIDIA Fugatto Tab -->
+            <div id="fugatto" class="tab-content">
+                <div class="model-header">
+                    <h2><i class="fas fa-microchip"></i> NVIDIA Fugatto</h2>
+                    <p>Flexible sound modeling with mixed text and audio inputs</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="input-panel">
+                        <h3>Input Configuration</h3>
+                        
+                        <div class="form-group">
+                            <label for="fg-text-prompt">Text Prompt</label>
+                            <textarea id="fg-text-prompt" placeholder="Describe the desired sound transformation..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fg-audio-file">Input Audio</label>
+                            <div class="file-input-container">
+                                <input type="file" id="fg-audio-file" accept="audio/*" style="display: none;">
+                                <button id="fg-upload-btn" class="btn btn-outline">
+                                    <i class="fas fa-upload"></i> Upload Audio
+                                </button>
+                                <span id="fg-file-name" class="file-name"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fg-duration">Duration (seconds)</label>
+                            <input type="number" id="fg-duration" value="10" min="1" max="30">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fg-timbre-weight">Timbre Weight</label>
+                            <input type="range" id="fg-timbre-weight" min="0" max="1" step="0.1" value="0.7">
+                            <span id="fg-timbre-weight-value">0.7</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fg-arrangement-weight">Arrangement Weight</label>
+                            <input type="range" id="fg-arrangement-weight" min="0" max="1" step="0.1" value="0.5">
+                            <span id="fg-arrangement-weight-value">0.5</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fg-notes-weight">Notes Weight</label>
+                            <input type="range" id="fg-notes-weight" min="0" max="1" step="0.1" value="0.3">
+                            <span id="fg-notes-weight-value">0.3</span>
+                        </div>
+
+                        <button id="fg-generate-btn" class="btn btn-primary btn-large">
+                            <i class="fas fa-play"></i> Generate Audio
+                        </button>
+                    </div>
+
+                    <div class="output-panel">
+                        <h3>Generated Audio</h3>
+                        <div id="fg-audio-player" class="audio-player">
+                            <div class="audio-controls">
+                                <button id="fg-play-btn" class="btn btn-icon" disabled>
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                    <span class="time-display">0:00 / 0:00</span>
+                                </div>
+                                <button id="fg-download-btn" class="btn btn-icon" disabled>
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="fg-status" class="status-message"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="audio-processor.js"></script>
+    <script src="local-models.js"></script>
+    <script src="model-apis.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

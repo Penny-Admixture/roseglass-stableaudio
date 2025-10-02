@@ -1,0 +1,57 @@
+appId: com.roseglass.stableaudio
+productName: RoseGlass StableAudio
+copyright: Copyright © 2024 RoseGlass
+directories:
+  output: dist
+  buildResources: build
+files:
+  - src/**/*
+  - package.json
+  - package-lock.json
+  - requirements.txt
+  - scripts/**/*
+  - "!node_modules/**/*"
+  - "!dist/**/*"
+  - "!build/**/*"
+  - "!.git/**/*"
+  - "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}"
+  - "!.editorconfig"
+  - "!**/._*"
+  - "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}"
+  - "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}"
+  - "!**/{appveyor.yml,.travis.yml,circle.yml}"
+  - "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: assets/icon.ico
+  publisherName: RoseGlass
+  verifyUpdateCodeSignature: false
+  requestedExecutionLevel: asInvoker
+
+nsis:
+  oneClick: false
+  perMachine: true
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: RoseGlass StableAudio
+  uninstallDisplayName: RoseGlass StableAudio
+  installerIcon: assets/icon.ico
+  uninstallerIcon: assets/icon.ico
+  installerHeader: assets/installer-header.bmp
+  installerHeaderIcon: assets/icon.ico
+  deleteAppDataOnUninstall: false
+  runAfterFinish: true
+  menuCategory: Audio & Video
+  displayLanguageSelector: false
+  language: 1033
+  artifactName: "${productName} Setup ${version}.${ext}"
+  include: "installer.nsh"
+
+# Custom installer script
+include: "installer.nsh"
